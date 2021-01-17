@@ -43,4 +43,22 @@ router.get('/:id', (req, res) => {
         })
 })
 
+router.get('/:id/comments', (req, res) => {
+    Posts.findPostComments(req.params.id)
+        .then(comments => {
+            if(comments.length > 0) {
+                res.status(200).json(comments);
+            } else {
+                res.status(400).json({ message: "No comments for this post."})
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                message: "Error retrieving the post."
+            })
+        })
+
+})
+
 module.exports = router;
