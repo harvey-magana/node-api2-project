@@ -9,9 +9,9 @@
 const express = require('express');
 const router = express.Router();
 
-const Posts = require('./posts-model.js');
+const Posts = require('../db-helpers.js');
 
-router.get('/api/posts', (req, res) => {
+router.get('/', (req, res) => {
     Posts.find(req.query)
         .then(posts => {
             res.status(200).json(posts);
@@ -20,6 +20,25 @@ router.get('/api/posts', (req, res) => {
             console.log(error);
             res.status(500).json({
                 message: "Error retrieving the posts"
+            })
+        })
+})
+
+router.get('/:id', (req, res) => {
+    Posts.findById(req.params.id)
+        .then(posts => {
+            if(posts) {
+                res.status(200).json(posts);
+            } else {
+                res.status(400).json({
+                    message: "Post id not found."
+                })
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                message: "Error retrieving the post."
             })
         })
 })
