@@ -62,7 +62,6 @@ router.get('/:id/comments', (req, res) => {
 })
 
 //needed
-//update (PUT)
 //remove (DELETE)
 
 router.post('/', (req, res) => {
@@ -95,6 +94,27 @@ router.put('/:id', (req, res) => {
             console.log(error);
             res.status(500).json({
                 message: "Error retrieving the post."
+            })
+        })
+})
+
+router.delete('/:id', (req, res) => {
+    Posts.remove(req.params.id)
+        .then(post => {
+            if(post > 0) {
+                res.status(200).json({
+                    message: "The post has been deleted."
+                })
+            } else {
+                res.status(404).json({
+                    message: "The post with the specified ID does not exist."
+                })
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                error: "The post could not be removed"
             })
         })
 })
