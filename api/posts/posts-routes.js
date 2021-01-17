@@ -61,4 +61,22 @@ router.get('/:id/comments', (req, res) => {
 
 })
 
+//needed
+//insert (POST)
+//update (PUT)
+//remove (DELETE)
+
+router.post('/', (req, res) => {
+    Posts.insert(req.body)
+        .then(post => {
+            res.status(201).json(post);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                message: "Error retrieving the posts"
+            })
+        })
+})
+
 module.exports = router;

@@ -16,4 +16,9 @@ router.get('/', (req, res) => {
         })
 })
 
+// needed
+// findPostComments (GET)
+// findCommentById (GET)
+// insertComment (POST)
+
 module.exports = router;
