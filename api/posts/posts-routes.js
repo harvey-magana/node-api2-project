@@ -62,7 +62,6 @@ router.get('/:id/comments', (req, res) => {
 })
 
 //needed
-//insert (POST)
 //update (PUT)
 //remove (DELETE)
 
@@ -75,6 +74,27 @@ router.post('/', (req, res) => {
             console.log(error);
             res.status(500).json({
                 message: "Error retrieving the posts"
+            })
+        })
+})
+
+router.put('/:id', (req, res) => {
+    const changes = req.body;
+    console.log(req)
+    Posts.update(req.params.id, changes)
+        .then(post => {
+            if(post) {
+                res.status(200).json(post);
+            } else {
+                res.status(400).json({
+                    message: "Post id not found."
+                })
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                message: "Error retrieving the post."
             })
         })
 })
