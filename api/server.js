@@ -8,7 +8,9 @@ const CommentsRouter = require('./comments/comments-routes.js');
 server.use(express.json());
 
 server.use('/api/posts', PostsRouter);
+server.use('/api/posts/:id', PostsRouter);
 server.use('/api/comments', CommentsRouter)
+server.use('/api/comments/:id', CommentsRouter)
 
 server.get('/', (req, res) => {
     res.json({ message: "Hello world!" });
