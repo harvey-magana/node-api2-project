@@ -18,7 +18,6 @@ router.get('/', (req, res) => {
 
 // needed
 // findCommentById (GET)
-// insertComment (POST)
 
 // this method is not working
 router.get('/:id/comments/:id', (req, res) => {
@@ -38,42 +37,6 @@ router.get('/:id/comments/:id', (req, res) => {
             })
         })
 
-})
-
-// This method is not working
-router.post('/:id/comments', (req, res) => {
-    const id = req.params.id;
-    const { text } = req.body;
-    const comment = {...req.body, post_id: id };
-
-    if(!text) {
-        res.status(400).json({ errorMessage: 'Please provide text for the comment.'})
-    } else {
-        Comments.findById(id)
-            .then((post) => {
-                if(!post.length) {
-                    res.status(404).json({
-                        message: 'The post with the specified ID does not exist.'
-                    })
-                } else {
-                    Comments.insertComment(comment)
-                        .then((comment) => {
-                            Comments.findCommentById(comment.id)
-                                .then(comment => {
-                                    res.status(201).json({ comment })
-                                })
-                        })
-                        .catch((error) => {
-                            res.status(500).json({
-                                error: 'There was an error while saving the comment to the database.'
-                            })
-                        })
-                }
-            })
-            .catch((error) => {
-                res.status(500).json(error)
-            })
-    }
 })
 
 module.exports = router;
